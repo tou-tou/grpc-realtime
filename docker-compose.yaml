@@ -1,0 +1,11 @@
+version: '3'
+
+services: 
+    realtime-grpc:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        tty: true
+        volumes:
+            - .:/go/src/github.com/tou-tou/realtime-grpc
+        stdin_open: true

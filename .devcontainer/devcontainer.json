@@ -1,0 +1,29 @@
+{
+    "name":"Go",
+    "dockerComposeFile":["../docker-compose.yaml"],
+    "service":"realtime-grpc",
+    "workspaceFolder":"/go/src/github.com/tou-tou/realtime-grpc",
+    "shutdownAction": "none",
+    "settings":{
+        "go.toolsManagement.checkForUpdates": "off",
+        "go.gocodeAutoBuild": true,
+        "go.formatTool": "gofmt",
+        "go.useLanguageServer": true,
+        "editor.formatOnSave": false,
+        "[go]": {
+            "editor.formatOnSave": true
+        }
+  },
+  "extensions": [
+    "doggy8088.go-extension-pack",
+    "formulahendry.code-runner",
+    "golang.go",
+    "msyrus.go-doc",
+    "nhoizey.gremlins",
+    "quicktype.quicktype",
+    "zxh404.vscode-proto3",
+    "formulahendry.vscode-mysql",
+  ],
+}
+
+
