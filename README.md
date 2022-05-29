@@ -10,6 +10,5 @@ $ export PATH="$PATH:$(go env GOPATH)/bin"
 # Regenerate gRPC code
 While still in the `realtime-grpc`dir ( workspace root dir) , run the following command:
 ```
-$ protoc --go_out=. --go_opt=paths=source_relative     --go-grpc_out=. --go-grpc_opt=require_unimplemented_servers=false,paths=source_relative    world/user.proto world/room.proto
+$ protoc --go_out=. --go_opt=paths=source_relative     --go-grpc_out=. --go-grpc_opt=paths=source_relative    world/user.proto world/room.proto
 ```
-`require_unimplemented_servers=false`のオプションがない場合の話は[Go言語でのgRPCコード生成(2020年10月以降版)｜Dentsu Digital Tech Blog｜note](https://note.com/dd_techblog/n/nb8b925d21118)を参照

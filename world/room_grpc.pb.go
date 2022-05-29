@@ -70,7 +70,7 @@ func (c *roomClient) Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.C
 }
 
 // RoomServer is the server API for Room service.
-// All implementations should embed UnimplementedRoomServer
+// All implementations must embed UnimplementedRoomServer
 // for forward compatibility
 type RoomServer interface {
 	// 部屋に入室するために使用する RPC
@@ -83,9 +83,10 @@ type RoomServer interface {
 	// 部屋から退出するために使用する RPC
 	// Sync が返却するユーザリストから指定したユーザを削除する
 	Leave(context.Context, *LeaveRequest) (*LeaveResponse, error)
+	mustEmbedUnimplementedRoomServer()
 }
 
-// UnimplementedRoomServer should be embedded to have forward compatible implementations.
+// UnimplementedRoomServer must be embedded to have forward compatible implementations.
 type UnimplementedRoomServer struct {
 }
 
@@ -98,6 +99,7 @@ func (UnimplementedRoomServer) Sync(context.Context, *SyncRequest) (*SyncRespons
 func (UnimplementedRoomServer) Leave(context.Context, *LeaveRequest) (*LeaveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Leave not implemented")
 }
+func (UnimplementedRoomServer) mustEmbedUnimplementedRoomServer() {}
 
 // UnsafeRoomServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to RoomServer will

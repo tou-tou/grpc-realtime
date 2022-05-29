@@ -28,6 +28,8 @@ type server struct {
 	// ユーザ情報を扱う連想配列
 	// key にはユーザの ID を value にはユーザ情報を格納する
 	users map[string]*pb.User
+
+	pb.UnimplementedRoomServer
 }
 
 // ルームにユーザが参加しているかどうかを判定するための関数
