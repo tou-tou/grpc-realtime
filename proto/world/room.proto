@@ -35,7 +35,7 @@ service Room {
     rpc Join (JoinRequest) returns (JoinResponse);
     // Sync requires room_id and user info and returns users info
     // user has user_id and position and euler rotation as info
-    rpc Sync (SyncRequest) returns (SyncResponse);
+    rpc Sync (stream SyncRequest) returns (stream SyncResponse);
     // Leave requires user_id and remove the user from users list that Sync returns
     rpc Leave (LeaveRequest) returns (LeaveResponse);
 }
