@@ -1,5 +1,6 @@
 # gRPC set up
 [Quick start | Go | gRPC](https://grpc.io/docs/languages/go/quickstart/)
+[Protocol bufferとgolangの勉強](https://zenn.dev/toutou/scraps/8f8be25de10d1b)
 
 ```
 $ go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
