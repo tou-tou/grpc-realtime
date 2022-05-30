@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package world;
+
+option go_package = "github.com/tou-tou/realtime-grpc/proto/world";
+
+import "proto/world/user.proto";
+
+message JoinRequest {
+    string room_id = 1;
+}
+
+message JoinResponse {
+    string user_id = 1;
+}
+
+message SyncRequest {
+    string room_id = 1;
+    User user = 2;
+}
+
+message SyncResponse {
+    repeated User users = 1;
+}
+
+message LeaveRequest {
+    string room_id = 1;
+    string user_id = 2;
+}
+
+message LeaveResponse {}
+
+service Room {
+    // Join requires room_id and returns user_id
+    rpc Join (JoinRequest) returns (JoinResponse);
+    // Sync requires room_id and user info and returns users info
+    // user has user_id and position and euler rotation as info
+    rpc Sync (SyncRequest) returns (SyncResponse);
+    // Leave requires user_id and remove the user from users list that Sync returns
+    rpc Leave (LeaveRequest) returns (LeaveResponse);
+}
