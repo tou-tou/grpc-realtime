@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package world;
+
+option go_package = "github.com/tou-tou/realtime-grpc/proto/world";
+
+// Position is the user's position
+message Position {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+}
+
+// EulerRotation is the user's euler rotation
+message EulerRotation {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+}
+
+// User contains user_id , position , euler rotation
+message User {
+    // Join RPC in room.proto return user_id
+    string user_id = 1;
+    Position pos = 2;
+    EulerRotation rot = 3;
+}
