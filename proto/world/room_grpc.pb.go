@@ -26,7 +26,7 @@ type RoomClient interface {
 	Join(ctx context.Context, in *JoinRequest, opts ...grpc.CallOption) (*JoinResponse, error)
 	// Sync requires room_id and user info and returns users info
 	// user has user_id and position and euler rotation as info
-	Sync(ctx context.Context, in *SyncRequest, opts ...grpc.CallOption) (*SyncResponse, error)
+	Sync(ctx context.Context, opts ...grpc.CallOption) (Room_SyncClient, error)
 	// Leave requires user_id and remove the user from users list that Sync returns
 	Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*LeaveResponse, error)
 }
@@ -48,13 +48,35 @@ func (c *roomClient) Join(ctx context.Context, in *JoinRequest, opts ...grpc.Cal
 	return out, nil
 }
 
-func (c *roomClient) Sync(ctx context.Context, in *SyncRequest, opts ...grpc.CallOption) (*SyncResponse, error) {
-	out := new(SyncResponse)
-	err := c.cc.Invoke(ctx, "/world.Room/Sync", in, out, opts...)
+func (c *roomClient) Sync(ctx context.Context, opts ...grpc.CallOption) (Room_SyncClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Room_ServiceDesc.Streams[0], "/world.Room/Sync", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &roomSyncClient{stream}
+	return x, nil
+}
+
+type Room_SyncClient interface {
+	Send(*SyncRequest) error
+	Recv() (*SyncResponse, error)
+	grpc.ClientStream
+}
+
+type roomSyncClient struct {
+	grpc.ClientStream
+}
+
+func (x *roomSyncClient) Send(m *SyncRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *roomSyncClient) Recv() (*SyncResponse, error) {
+	m := new(SyncResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *roomClient) Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*LeaveResponse, error) {
@@ -74,7 +96,7 @@ type RoomServer interface {
 	Join(context.Context, *JoinRequest) (*JoinResponse, error)
 	// Sync requires room_id and user info and returns users info
 	// user has user_id and position and euler rotation as info
-	Sync(context.Context, *SyncRequest) (*SyncResponse, error)
+	Sync(Room_SyncServer) error
 	// Leave requires user_id and remove the user from users list that Sync returns
 	Leave(context.Context, *LeaveRequest) (*LeaveResponse, error)
 	mustEmbedUnimplementedRoomServer()
@@ -87,8 +109,8 @@ type UnimplementedRoomServer struct {
 func (UnimplementedRoomServer) Join(context.Context, *JoinRequest) (*JoinResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Join not implemented")
 }
-func (UnimplementedRoomServer) Sync(context.Context, *SyncRequest) (*SyncResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Sync not implemented")
+func (UnimplementedRoomServer) Sync(Room_SyncServer) error {
+	return status.Errorf(codes.Unimplemented, "method Sync not implemented")
 }
 func (UnimplementedRoomServer) Leave(context.Context, *LeaveRequest) (*LeaveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Leave not implemented")
@@ -124,22 +146,30 @@ func _Room_Join_Handler(srv interface{}, ctx context.Context, dec func(interface
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Room_Sync_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SyncRequest)
-	if err := dec(in); err != nil {
+func _Room_Sync_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(RoomServer).Sync(&roomSyncServer{stream})
+}
+
+type Room_SyncServer interface {
+	Send(*SyncResponse) error
+	Recv() (*SyncRequest, error)
+	grpc.ServerStream
+}
+
+type roomSyncServer struct {
+	grpc.ServerStream
+}
+
+func (x *roomSyncServer) Send(m *SyncResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *roomSyncServer) Recv() (*SyncRequest, error) {
+	m := new(SyncRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(RoomServer).Sync(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/world.Room/Sync",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoomServer).Sync(ctx, req.(*SyncRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return m, nil
 }
 
 func _Room_Leave_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -172,14 +202,17 @@ var Room_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Room_Join_Handler,
 		},
 		{
-			MethodName: "Sync",
-			Handler:    _Room_Sync_Handler,
-		},
-		{
 			MethodName: "Leave",
 			Handler:    _Room_Leave_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Sync",
+			Handler:       _Room_Sync_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "proto/world/room.proto",
 }
