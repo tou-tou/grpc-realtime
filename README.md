@@ -11,3 +11,9 @@ In the `realtime-grpc`dir ( workspace root dir) , run the following command:
 ```
 $ protoc --go_out=. --go_opt=paths=source_relative  --go-grpc_out=. --go-grpc_opt=paths=source_relative    proto/world/user.proto proto/world/room.proto 
 ```
+
+# generate gRPC for c#
+In the `realtime-grpc`dir ( workspace root dir) , run the following command:
+```
+$ protoc --proto_path=. --csharp_out=./proto/world  proto/world/user.proto proto/world/room.proto
+```
