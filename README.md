@@ -37,4 +37,5 @@ $ protoc --go_out=. --go_opt=paths=source_relative  --go-grpc_out=. --go-grpc_op
 1. unzip grpc_unity_package.2.47.0-dev202204190851.zip and put on Assets dir in Unity Project
 1. In Unity Editor , File -> Build Settings -> Player Settings -> Other Settings -> set `.Net Framework` on Api Compatibility Level
 1. Implement Client Code.
+    ref [client | gRPC](https://grpc.io/docs/languages/csharp/basics/#client)
 
