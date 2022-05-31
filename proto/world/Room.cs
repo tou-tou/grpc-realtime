@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace world {
+namespace World {
 
   /// <summary>Holder for reflection information generated from proto/world/room.proto</summary>
   public static partial class RoomReflection {
@@ -35,16 +35,16 @@ namespace world {
             "b3JsZC5TeW5jUmVxdWVzdBoTLndvcmxkLlN5bmNSZXNwb25zZSgBMAESMgoF",
             "TGVhdmUSEy53b3JsZC5MZWF2ZVJlcXVlc3QaFC53b3JsZC5MZWF2ZVJlc3Bv",
             "bnNlQjZaLGdpdGh1Yi5jb20vdG91LXRvdS9yZWFsdGltZS1ncnBjL3Byb3Rv",
-            "L3dvcmxkqgIFd29ybGRiBnByb3RvMw=="));
+            "L3dvcmxkqgIFV29ybGRiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::world.UserReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::World.UserReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::world.JoinRequest), global::world.JoinRequest.Parser, new[]{ "RoomId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::world.JoinResponse), global::world.JoinResponse.Parser, new[]{ "UserId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::world.SyncRequest), global::world.SyncRequest.Parser, new[]{ "RoomId", "User" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::world.SyncResponse), global::world.SyncResponse.Parser, new[]{ "Users" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::world.LeaveRequest), global::world.LeaveRequest.Parser, new[]{ "RoomId", "UserId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::world.LeaveResponse), global::world.LeaveResponse.Parser, null, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::World.JoinRequest), global::World.JoinRequest.Parser, new[]{ "RoomId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::World.JoinResponse), global::World.JoinResponse.Parser, new[]{ "UserId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::World.SyncRequest), global::World.SyncRequest.Parser, new[]{ "RoomId", "User" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::World.SyncResponse), global::World.SyncResponse.Parser, new[]{ "Users" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::World.LeaveRequest), global::World.LeaveRequest.Parser, new[]{ "RoomId", "UserId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::World.LeaveResponse), global::World.LeaveResponse.Parser, null, null, null, null, null)
           }));
     }
     #endregion
@@ -59,7 +59,7 @@ namespace world {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::world.RoomReflection.Descriptor.MessageTypes[0]; }
+      get { return global::World.RoomReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -188,7 +188,7 @@ namespace world {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::world.RoomReflection.Descriptor.MessageTypes[1]; }
+      get { return global::World.RoomReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -317,7 +317,7 @@ namespace world {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::world.RoomReflection.Descriptor.MessageTypes[2]; }
+      get { return global::World.RoomReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -357,9 +357,9 @@ namespace world {
 
     /// <summary>Field number for the "user" field.</summary>
     public const int UserFieldNumber = 2;
-    private global::world.User user_;
+    private global::World.User user_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::world.User User {
+    public global::World.User User {
       get { return user_; }
       set {
         user_ = value;
@@ -440,7 +440,7 @@ namespace world {
       }
       if (other.user_ != null) {
         if (user_ == null) {
-          User = new global::world.User();
+          User = new global::World.User();
         }
         User.MergeFrom(other.User);
       }
@@ -461,7 +461,7 @@ namespace world {
           }
           case 18: {
             if (user_ == null) {
-              User = new global::world.User();
+              User = new global::World.User();
             }
             input.ReadMessage(User);
             break;
@@ -480,7 +480,7 @@ namespace world {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::world.RoomReflection.Descriptor.MessageTypes[3]; }
+      get { return global::World.RoomReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -508,11 +508,11 @@ namespace world {
 
     /// <summary>Field number for the "users" field.</summary>
     public const int UsersFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::world.User> _repeated_users_codec
-        = pb::FieldCodec.ForMessage(10, global::world.User.Parser);
-    private readonly pbc::RepeatedField<global::world.User> users_ = new pbc::RepeatedField<global::world.User>();
+    private static readonly pb::FieldCodec<global::World.User> _repeated_users_codec
+        = pb::FieldCodec.ForMessage(10, global::World.User.Parser);
+    private readonly pbc::RepeatedField<global::World.User> users_ = new pbc::RepeatedField<global::World.User>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::world.User> Users {
+    public pbc::RepeatedField<global::World.User> Users {
       get { return users_; }
     }
 
@@ -601,7 +601,7 @@ namespace world {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::world.RoomReflection.Descriptor.MessageTypes[4]; }
+      get { return global::World.RoomReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -758,7 +758,7 @@ namespace world {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::world.RoomReflection.Descriptor.MessageTypes[5]; }
+      get { return global::World.RoomReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
