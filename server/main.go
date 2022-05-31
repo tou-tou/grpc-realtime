@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	tls  = flag.Bool("tls", false, "Connection users TLS if true, else plain TCP")
+	//tls  = flag.Bool("tls", false, "Connection users TLS if true, else plain TCP")
 	port = flag.Int("port", 50051, "The server port")
 )
 
@@ -75,6 +75,8 @@ func (s *roomServer) Join(ctx context.Context, req *pb.JoinRequest) (*pb.JoinRes
 	// generate user_id
 	userUUID, _ := uuid.NewRandom()
 	userID := userUUID.String()
+	join := fmt.Sprintf("join! world_id:%s user_id:%s", roomID, userID)
+	fmt.Println(join)
 
 	// add user_id to room's user list
 	s.rooms[roomID] = append(s.rooms[roomID], userID)
@@ -167,9 +169,9 @@ func main() {
 		log.Fatalf("failed to listen :%v", err)
 	}
 	grpcServer := grpc.NewServer()
-
+	fmt.Println("Start gRPC Server")
 	pb.RegisterRoomServer(grpcServer, &roomServer{
-		rooms:                   map[string][]string{"world": {}}, // initial room_id is only "world"
+		rooms:                   map[string][]string{"metaverse": {}}, // initial room_id is only "world"
 		users:                   map[string]*pb.User{},
 		UnimplementedRoomServer: pb.UnimplementedRoomServer{},
 	})
@@ -177,4 +179,5 @@ func main() {
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
+
 }

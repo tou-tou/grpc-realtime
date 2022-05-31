@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace world {
+namespace World {
 
   /// <summary>Holder for reflection information generated from proto/world/user.proto</summary>
   public static partial class UserReflection {
@@ -29,14 +29,14 @@ namespace world {
             "aW9uEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIlgKBFVzZXIS",
             "DwoHdXNlcl9pZBgBIAEoCRIcCgNwb3MYAiABKAsyDy53b3JsZC5Qb3NpdGlv",
             "bhIhCgNyb3QYAyABKAsyFC53b3JsZC5FdWxlclJvdGF0aW9uQjZaLGdpdGh1",
-            "Yi5jb20vdG91LXRvdS9yZWFsdGltZS1ncnBjL3Byb3RvL3dvcmxkqgIFd29y",
+            "Yi5jb20vdG91LXRvdS9yZWFsdGltZS1ncnBjL3Byb3RvL3dvcmxkqgIFV29y",
             "bGRiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::world.Position), global::world.Position.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::world.EulerRotation), global::world.EulerRotation.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::world.User), global::world.User.Parser, new[]{ "UserId", "Pos", "Rot" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::World.Position), global::World.Position.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::World.EulerRotation), global::World.EulerRotation.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::World.User), global::World.User.Parser, new[]{ "UserId", "Pos", "Rot" }, null, null, null, null)
           }));
     }
     #endregion
@@ -54,7 +54,7 @@ namespace world {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::world.UserReflection.Descriptor.MessageTypes[0]; }
+      get { return global::World.UserReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -242,7 +242,7 @@ namespace world {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::world.UserReflection.Descriptor.MessageTypes[1]; }
+      get { return global::World.UserReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -430,7 +430,7 @@ namespace world {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::world.UserReflection.Descriptor.MessageTypes[2]; }
+      get { return global::World.UserReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -474,9 +474,9 @@ namespace world {
 
     /// <summary>Field number for the "pos" field.</summary>
     public const int PosFieldNumber = 2;
-    private global::world.Position pos_;
+    private global::World.Position pos_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::world.Position Pos {
+    public global::World.Position Pos {
       get { return pos_; }
       set {
         pos_ = value;
@@ -485,9 +485,9 @@ namespace world {
 
     /// <summary>Field number for the "rot" field.</summary>
     public const int RotFieldNumber = 3;
-    private global::world.EulerRotation rot_;
+    private global::World.EulerRotation rot_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::world.EulerRotation Rot {
+    public global::World.EulerRotation Rot {
       get { return rot_; }
       set {
         rot_ = value;
@@ -577,13 +577,13 @@ namespace world {
       }
       if (other.pos_ != null) {
         if (pos_ == null) {
-          Pos = new global::world.Position();
+          Pos = new global::World.Position();
         }
         Pos.MergeFrom(other.Pos);
       }
       if (other.rot_ != null) {
         if (rot_ == null) {
-          Rot = new global::world.EulerRotation();
+          Rot = new global::World.EulerRotation();
         }
         Rot.MergeFrom(other.Rot);
       }
@@ -604,14 +604,14 @@ namespace world {
           }
           case 18: {
             if (pos_ == null) {
-              Pos = new global::world.Position();
+              Pos = new global::World.Position();
             }
             input.ReadMessage(Pos);
             break;
           }
           case 26: {
             if (rot_ == null) {
-              Rot = new global::world.EulerRotation();
+              Rot = new global::World.EulerRotation();
             }
             input.ReadMessage(Rot);
             break;

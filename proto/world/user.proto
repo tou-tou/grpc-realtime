@@ -3,7 +3,7 @@ syntax = "proto3";
 package world;
 
 option go_package = "github.com/tou-tou/realtime-grpc/proto/world";
-option csharp_namespace = "world";
+option csharp_namespace = "World";
 
 // Position is the user's position
 message Position {
