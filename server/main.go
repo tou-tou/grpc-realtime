@@ -75,8 +75,8 @@ func (s *roomServer) Join(ctx context.Context, req *pb.JoinRequest) (*pb.JoinRes
 	// generate user_id
 	userUUID, _ := uuid.NewRandom()
 	userID := userUUID.String()
-	join := fmt.Sprintf("join! world_id:%s user_id:%s", roomID, userID)
-	fmt.Println(join)
+	m := fmt.Sprintf("join! world_id:%s user_id:%s", roomID, userID)
+	fmt.Println(m)
 
 	// add user_id to room's user list
 	s.rooms[roomID] = append(s.rooms[roomID], userID)
@@ -150,6 +150,9 @@ func (s *roomServer) Leave(ctx context.Context, req *pb.LeaveRequest) (*pb.Leave
 		s := fmt.Sprintf("user with %s does not exit", userID)
 		return nil, errors.New(s)
 	}
+
+	m := fmt.Sprintf("Leave! world_id:%s user_id:%s", roomID, userID)
+	fmt.Println(m)
 
 	// delete user info from room and user list
 	index := indexOfArray(s.rooms[roomID], userID)
