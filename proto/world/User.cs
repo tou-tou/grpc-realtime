@@ -26,17 +26,21 @@ namespace World {
           string.Concat(
             "ChZwcm90by93b3JsZC91c2VyLnByb3RvEgV3b3JsZCIrCghQb3NpdGlvbhIJ",
             "CgF4GAEgASgCEgkKAXkYAiABKAISCQoBehgDIAEoAiIwCg1FdWxlclJvdGF0",
-            "aW9uEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIlgKBFVzZXIS",
-            "DwoHdXNlcl9pZBgBIAEoCRIcCgNwb3MYAiABKAsyDy53b3JsZC5Qb3NpdGlv",
-            "bhIhCgNyb3QYAyABKAsyFC53b3JsZC5FdWxlclJvdGF0aW9uQjZaLGdpdGh1",
-            "Yi5jb20vdG91LXRvdS9yZWFsdGltZS1ncnBjL3Byb3RvL3dvcmxkqgIFV29y",
-            "bGRiBnByb3RvMw=="));
+            "aW9uEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIkwKCVRyYW5z",
+            "Zm9ybRIcCgNwb3MYASABKAsyDy53b3JsZC5Qb3NpdGlvbhIhCgNyb3QYAiAB",
+            "KAsyFC53b3JsZC5FdWxlclJvdGF0aW9uIqQBCgRVc2VyEg8KB3VzZXJfaWQY",
+            "ASABKAkSIAoGb3JpZ2luGAIgASgLMhAud29ybGQuVHJhbnNmb3JtEh4KBGhl",
+            "YWQYAyABKAsyEC53b3JsZC5UcmFuc2Zvcm0SIwoJbGVmdF9oYW5kGAQgASgL",
+            "MhAud29ybGQuVHJhbnNmb3JtEiQKCnJpZ2h0X2hhbmQYBSABKAsyEC53b3Js",
+            "ZC5UcmFuc2Zvcm1CNlosZ2l0aHViLmNvbS90b3UtdG91L3JlYWx0aW1lLWdy",
+            "cGMvcHJvdG8vd29ybGSqAgVXb3JsZGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::World.Position), global::World.Position.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::World.EulerRotation), global::World.EulerRotation.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::World.User), global::World.User.Parser, new[]{ "UserId", "Pos", "Rot" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::World.Transform), global::World.Transform.Parser, new[]{ "Pos", "Rot" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::World.User), global::World.User.Parser, new[]{ "UserId", "Origin", "Head", "LeftHand", "RightHand" }, null, null, null, null)
           }));
     }
     #endregion
@@ -420,13 +424,13 @@ namespace World {
   }
 
   /// <summary>
-  /// User contains user_id , position , euler rotation
+  /// Transform is the user's transform
   /// </summary>
-  public sealed partial class User : pb::IMessage<User> {
-    private static readonly pb::MessageParser<User> _parser = new pb::MessageParser<User>(() => new User());
+  public sealed partial class Transform : pb::IMessage<Transform> {
+    private static readonly pb::MessageParser<Transform> _parser = new pb::MessageParser<Transform>(() => new Transform());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<User> Parser { get { return _parser; } }
+    public static pb::MessageParser<Transform> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -439,41 +443,26 @@ namespace World {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public User() {
+    public Transform() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public User(User other) : this() {
-      userId_ = other.userId_;
+    public Transform(Transform other) : this() {
       pos_ = other.pos_ != null ? other.pos_.Clone() : null;
       rot_ = other.rot_ != null ? other.rot_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public User Clone() {
-      return new User(this);
-    }
-
-    /// <summary>Field number for the "user_id" field.</summary>
-    public const int UserIdFieldNumber = 1;
-    private string userId_ = "";
-    /// <summary>
-    /// Join RPC in room.proto return user_id
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string UserId {
-      get { return userId_; }
-      set {
-        userId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
+    public Transform Clone() {
+      return new Transform(this);
     }
 
     /// <summary>Field number for the "pos" field.</summary>
-    public const int PosFieldNumber = 2;
+    public const int PosFieldNumber = 1;
     private global::World.Position pos_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::World.Position Pos {
@@ -484,7 +473,7 @@ namespace World {
     }
 
     /// <summary>Field number for the "rot" field.</summary>
-    public const int RotFieldNumber = 3;
+    public const int RotFieldNumber = 2;
     private global::World.EulerRotation rot_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::World.EulerRotation Rot {
@@ -496,18 +485,17 @@ namespace World {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as User);
+      return Equals(other as Transform);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(User other) {
+    public bool Equals(Transform other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (UserId != other.UserId) return false;
       if (!object.Equals(Pos, other.Pos)) return false;
       if (!object.Equals(Rot, other.Rot)) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -516,7 +504,6 @@ namespace World {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (UserId.Length != 0) hash ^= UserId.GetHashCode();
       if (pos_ != null) hash ^= Pos.GetHashCode();
       if (rot_ != null) hash ^= Rot.GetHashCode();
       if (_unknownFields != null) {
@@ -532,16 +519,12 @@ namespace World {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (UserId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(UserId);
-      }
       if (pos_ != null) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(10);
         output.WriteMessage(Pos);
       }
       if (rot_ != null) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteMessage(Rot);
       }
       if (_unknownFields != null) {
@@ -552,9 +535,6 @@ namespace World {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (UserId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserId);
-      }
       if (pos_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Pos);
       }
@@ -568,12 +548,9 @@ namespace World {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(User other) {
+    public void MergeFrom(Transform other) {
       if (other == null) {
         return;
-      }
-      if (other.UserId.Length != 0) {
-        UserId = other.UserId;
       }
       if (other.pos_ != null) {
         if (pos_ == null) {
@@ -599,21 +576,288 @@ namespace World {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            UserId = input.ReadString();
-            break;
-          }
-          case 18: {
             if (pos_ == null) {
               Pos = new global::World.Position();
             }
             input.ReadMessage(Pos);
             break;
           }
-          case 26: {
+          case 18: {
             if (rot_ == null) {
               Rot = new global::World.EulerRotation();
             }
             input.ReadMessage(Rot);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
+  /// User contains user_id , position , euler rotation
+  /// </summary>
+  public sealed partial class User : pb::IMessage<User> {
+    private static readonly pb::MessageParser<User> _parser = new pb::MessageParser<User>(() => new User());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<User> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::World.UserReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public User() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public User(User other) : this() {
+      userId_ = other.userId_;
+      origin_ = other.origin_ != null ? other.origin_.Clone() : null;
+      head_ = other.head_ != null ? other.head_.Clone() : null;
+      leftHand_ = other.leftHand_ != null ? other.leftHand_.Clone() : null;
+      rightHand_ = other.rightHand_ != null ? other.rightHand_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public User Clone() {
+      return new User(this);
+    }
+
+    /// <summary>Field number for the "user_id" field.</summary>
+    public const int UserIdFieldNumber = 1;
+    private string userId_ = "";
+    /// <summary>
+    /// Join RPC in room.proto return user_id
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string UserId {
+      get { return userId_; }
+      set {
+        userId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "origin" field.</summary>
+    public const int OriginFieldNumber = 2;
+    private global::World.Transform origin_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::World.Transform Origin {
+      get { return origin_; }
+      set {
+        origin_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "head" field.</summary>
+    public const int HeadFieldNumber = 3;
+    private global::World.Transform head_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::World.Transform Head {
+      get { return head_; }
+      set {
+        head_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "left_hand" field.</summary>
+    public const int LeftHandFieldNumber = 4;
+    private global::World.Transform leftHand_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::World.Transform LeftHand {
+      get { return leftHand_; }
+      set {
+        leftHand_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "right_hand" field.</summary>
+    public const int RightHandFieldNumber = 5;
+    private global::World.Transform rightHand_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::World.Transform RightHand {
+      get { return rightHand_; }
+      set {
+        rightHand_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as User);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(User other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (UserId != other.UserId) return false;
+      if (!object.Equals(Origin, other.Origin)) return false;
+      if (!object.Equals(Head, other.Head)) return false;
+      if (!object.Equals(LeftHand, other.LeftHand)) return false;
+      if (!object.Equals(RightHand, other.RightHand)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (UserId.Length != 0) hash ^= UserId.GetHashCode();
+      if (origin_ != null) hash ^= Origin.GetHashCode();
+      if (head_ != null) hash ^= Head.GetHashCode();
+      if (leftHand_ != null) hash ^= LeftHand.GetHashCode();
+      if (rightHand_ != null) hash ^= RightHand.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (UserId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(UserId);
+      }
+      if (origin_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Origin);
+      }
+      if (head_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Head);
+      }
+      if (leftHand_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(LeftHand);
+      }
+      if (rightHand_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(RightHand);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (UserId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserId);
+      }
+      if (origin_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Origin);
+      }
+      if (head_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Head);
+      }
+      if (leftHand_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(LeftHand);
+      }
+      if (rightHand_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(RightHand);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(User other) {
+      if (other == null) {
+        return;
+      }
+      if (other.UserId.Length != 0) {
+        UserId = other.UserId;
+      }
+      if (other.origin_ != null) {
+        if (origin_ == null) {
+          Origin = new global::World.Transform();
+        }
+        Origin.MergeFrom(other.Origin);
+      }
+      if (other.head_ != null) {
+        if (head_ == null) {
+          Head = new global::World.Transform();
+        }
+        Head.MergeFrom(other.Head);
+      }
+      if (other.leftHand_ != null) {
+        if (leftHand_ == null) {
+          LeftHand = new global::World.Transform();
+        }
+        LeftHand.MergeFrom(other.LeftHand);
+      }
+      if (other.rightHand_ != null) {
+        if (rightHand_ == null) {
+          RightHand = new global::World.Transform();
+        }
+        RightHand.MergeFrom(other.RightHand);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            UserId = input.ReadString();
+            break;
+          }
+          case 18: {
+            if (origin_ == null) {
+              Origin = new global::World.Transform();
+            }
+            input.ReadMessage(Origin);
+            break;
+          }
+          case 26: {
+            if (head_ == null) {
+              Head = new global::World.Transform();
+            }
+            input.ReadMessage(Head);
+            break;
+          }
+          case 34: {
+            if (leftHand_ == null) {
+              LeftHand = new global::World.Transform();
+            }
+            input.ReadMessage(LeftHand);
+            break;
+          }
+          case 42: {
+            if (rightHand_ == null) {
+              RightHand = new global::World.Transform();
+            }
+            input.ReadMessage(RightHand);
             break;
           }
         }

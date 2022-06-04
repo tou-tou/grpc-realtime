@@ -27,7 +27,7 @@ $ protoc --go_out=. --go_opt=paths=source_relative  --go-grpc_out=. --go-grpc_op
     ```
 1. In the `realtime-grpc`dir ( workspace root dir) , run the following command:
     ```
-    protoc --proto_path=. --csharp_out=. --grpc_out=. proto/world/user.proto proto/world/room.proto --plugin=protoc-gen-grpc=Grpc.Tools/tools/linux_x64/grpc_csharp_plugin
+    protoc --proto_path=. --csharp_out=proto/world --grpc_out=proto/world proto/world/user.proto proto/world/room.proto --plugin=protoc-gen-grpc=Grpc.Tools/tools/linux_x64/grpc_csharp_plugin
     ```
     Room.cs,RoomGrpc.cs,User.cs are generated
 
