@@ -61,45 +61,62 @@ func indexOfArray(s []string, userID string) int {
 }
 
 // UpdateTransform is update user's transform on user list
-func (s *roomServer) UpdateTransform(user *pb.User) {
-	userID := user.UserId
-
+func (s *roomServer) UpdateTransform(userID string, user *pb.User) {
 	origin := user.GetOrigin()
-	s.users[userID].Origin.Pos.X = origin.GetPos().GetX()
-	s.users[userID].Origin.Pos.Y = origin.GetPos().GetY()
-	s.users[userID].Origin.Pos.Z = origin.GetPos().GetZ()
-
-	s.users[userID].Origin.Rot.X = origin.GetRot().GetX()
-	s.users[userID].Origin.Rot.Y = origin.GetRot().GetY()
-	s.users[userID].Origin.Rot.Z = origin.GetRot().GetZ()
+	s.users[userID].Origin = &pb.Transform{
+		Pos: &pb.Position{
+			X: origin.GetPos().GetX(),
+			Y: origin.GetPos().GetY(),
+			Z: origin.GetPos().GetZ(),
+		},
+		Rot: &pb.EulerRotation{
+			X: origin.GetRot().GetX(),
+			Y: origin.GetRot().GetY(),
+			Z: origin.GetRot().GetZ(),
+		},
+	}
 
 	head := user.GetHead()
-	s.users[userID].Head.Pos.X = head.GetPos().GetX()
-	s.users[userID].Head.Pos.Y = head.GetPos().GetY()
-	s.users[userID].Head.Pos.Z = head.GetPos().GetZ()
+	s.users[userID].Head = &pb.Transform{
+		Pos: &pb.Position{
+			X: head.GetPos().GetX(),
+			Y: head.GetPos().GetY(),
+			Z: head.GetPos().GetZ(),
+		},
+		Rot: &pb.EulerRotation{
+			X: head.GetRot().GetX(),
+			Y: head.GetRot().GetY(),
+			Z: head.GetRot().GetZ(),
+		},
+	}
 
-	s.users[userID].Head.Rot.X = head.GetRot().GetX()
-	s.users[userID].Head.Rot.Y = head.GetRot().GetY()
-	s.users[userID].Head.Rot.Z = head.GetRot().GetZ()
+	left := user.GetLeftHand()
+	s.users[userID].LeftHand = &pb.Transform{
+		Pos: &pb.Position{
+			X: left.GetPos().GetX(),
+			Y: left.GetPos().GetY(),
+			Z: left.GetPos().GetZ(),
+		},
+		Rot: &pb.EulerRotation{
+			X: left.GetRot().GetX(),
+			Y: left.GetRot().GetY(),
+			Z: left.GetRot().GetZ(),
+		},
+	}
 
-	leftHand := user.GetLeftHand()
-	s.users[userID].LeftHand.Pos.X = leftHand.GetPos().GetX()
-	s.users[userID].LeftHand.Pos.Y = leftHand.GetPos().GetY()
-	s.users[userID].LeftHand.Pos.Z = leftHand.GetPos().GetZ()
-
-	s.users[userID].LeftHand.Rot.X = leftHand.GetRot().GetX()
-	s.users[userID].LeftHand.Rot.Y = leftHand.GetRot().GetY()
-	s.users[userID].LeftHand.Rot.Z = leftHand.GetRot().GetZ()
-
-	rightHand := user.GetRightHand()
-	s.users[userID].RightHand.Pos.X = rightHand.GetPos().GetX()
-	s.users[userID].RightHand.Pos.Y = rightHand.GetPos().GetY()
-	s.users[userID].RightHand.Pos.Z = rightHand.GetPos().GetZ()
-
-	s.users[userID].RightHand.Rot.X = rightHand.GetRot().GetX()
-	s.users[userID].RightHand.Rot.Y = rightHand.GetRot().GetY()
-	s.users[userID].RightHand.Rot.Z = rightHand.GetRot().GetZ()
-
+	right := user.GetRightHand()
+	s.users[userID].RightHand = &pb.Transform{
+		Pos: &pb.Position{
+			X: right.GetPos().GetX(),
+			Y: right.GetPos().GetY(),
+			Z: right.GetPos().GetZ(),
+		},
+		Rot: &pb.EulerRotation{
+			X: right.GetRot().GetX(),
+			Y: right.GetRot().GetY(),
+			Z: right.GetRot().GetZ(),
+		},
+	}
 }
 
 // Join function requires room_id and return user_id
@@ -138,7 +155,6 @@ func (s *roomServer) Join(ctx context.Context, req *pb.JoinRequest) (*pb.JoinRes
 }
 
 func (s *roomServer) Sync(stream pb.Room_SyncServer) error {
-	fmt.Println("sync")
 	for {
 		in, err := stream.Recv()
 		if err == io.EOF {
@@ -164,7 +180,8 @@ func (s *roomServer) Sync(stream pb.Room_SyncServer) error {
 		}
 
 		// update user's pos and rot
-		s.UpdateTransform(in.GetUser())
+		user := in.GetUser()
+		s.UpdateTransform(userID, user)
 
 		if err := stream.Send(&pb.SyncResponse{
 			Users: s.roomUsers(roomID),
