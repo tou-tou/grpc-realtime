@@ -62,6 +62,8 @@ func indexOfArray(s []string, userID string) int {
 
 // UpdateTransform is update user's transform on user list
 func (s *roomServer) UpdateTransform(userID string, user *pb.User) {
+
+	s.users[userID].UserId = userID
 	origin := user.GetOrigin()
 	s.users[userID].Origin = &pb.Transform{
 		Pos: &pb.Position{
@@ -165,7 +167,8 @@ func (s *roomServer) Sync(stream pb.Room_SyncServer) error {
 		}
 
 		roomID := in.GetRoomId()
-		userID := in.GetUser().UserId
+		user := in.GetUser()
+		userID := user.GetUserId()
 
 		// room is not exist
 		_, isExistRoom := s.rooms[roomID]
@@ -180,8 +183,9 @@ func (s *roomServer) Sync(stream pb.Room_SyncServer) error {
 		}
 
 		// update user's pos and rot
-		user := in.GetUser()
 		s.UpdateTransform(userID, user)
+		m := fmt.Sprintf("user_id:%s", userID)
+		fmt.Println(m)
 
 		if err := stream.Send(&pb.SyncResponse{
 			Users: s.roomUsers(roomID),
@@ -217,6 +221,12 @@ func (s *roomServer) Leave(ctx context.Context, req *pb.LeaveRequest) (*pb.Leave
 	delete(s.users, userID)
 
 	return &pb.LeaveResponse{}, nil
+}
+
+func (s *roomServer) UserList(ctx context.Context, req *pb.UserListRequet) (*pb.UserListResponse, error) {
+	return &pb.UserListResponse{
+		UserIds: s.rooms[req.RoomId],
+	}, nil
 }
 
 func main() {
