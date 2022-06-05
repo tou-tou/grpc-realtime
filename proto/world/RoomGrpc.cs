@@ -57,6 +57,10 @@ namespace World {
     static readonly grpc::Marshaller<global::World.LeaveRequest> __Marshaller_world_LeaveRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::World.LeaveRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::World.LeaveResponse> __Marshaller_world_LeaveResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::World.LeaveResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::World.UserListRequet> __Marshaller_world_UserListRequet = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::World.UserListRequet.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::World.UserListResponse> __Marshaller_world_UserListResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::World.UserListResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::World.JoinRequest, global::World.JoinResponse> __Method_Join = new grpc::Method<global::World.JoinRequest, global::World.JoinResponse>(
@@ -81,6 +85,14 @@ namespace World {
         "Leave",
         __Marshaller_world_LeaveRequest,
         __Marshaller_world_LeaveResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::World.UserListRequet, global::World.UserListResponse> __Method_UserList = new grpc::Method<global::World.UserListRequet, global::World.UserListResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "UserList",
+        __Marshaller_world_UserListRequet,
+        __Marshaller_world_UserListResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -126,6 +138,18 @@ namespace World {
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::World.LeaveResponse> Leave(global::World.LeaveRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// UserList requires room_id and returns list of user_id
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::World.UserListResponse> UserList(global::World.UserListRequet request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -279,6 +303,54 @@ namespace World {
       {
         return CallInvoker.AsyncUnaryCall(__Method_Leave, null, options, request);
       }
+      /// <summary>
+      /// UserList requires room_id and returns list of user_id
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::World.UserListResponse UserList(global::World.UserListRequet request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return UserList(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// UserList requires room_id and returns list of user_id
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::World.UserListResponse UserList(global::World.UserListRequet request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_UserList, null, options, request);
+      }
+      /// <summary>
+      /// UserList requires room_id and returns list of user_id
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::World.UserListResponse> UserListAsync(global::World.UserListRequet request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return UserListAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// UserList requires room_id and returns list of user_id
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::World.UserListResponse> UserListAsync(global::World.UserListRequet request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_UserList, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override RoomClient NewInstance(ClientBaseConfiguration configuration)
@@ -295,7 +367,8 @@ namespace World {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_Join, serviceImpl.Join)
           .AddMethod(__Method_Sync, serviceImpl.Sync)
-          .AddMethod(__Method_Leave, serviceImpl.Leave).Build();
+          .AddMethod(__Method_Leave, serviceImpl.Leave)
+          .AddMethod(__Method_UserList, serviceImpl.UserList).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -308,6 +381,7 @@ namespace World {
       serviceBinder.AddMethod(__Method_Join, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::World.JoinRequest, global::World.JoinResponse>(serviceImpl.Join));
       serviceBinder.AddMethod(__Method_Sync, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::World.SyncRequest, global::World.SyncResponse>(serviceImpl.Sync));
       serviceBinder.AddMethod(__Method_Leave, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::World.LeaveRequest, global::World.LeaveResponse>(serviceImpl.Leave));
+      serviceBinder.AddMethod(__Method_UserList, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::World.UserListRequet, global::World.UserListResponse>(serviceImpl.UserList));
     }
 
   }

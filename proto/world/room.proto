@@ -31,6 +31,14 @@ message LeaveRequest {
 
 message LeaveResponse {}
 
+message UserListRequet {
+    string room_id = 1;
+}
+
+message UserListResponse {
+    repeated string user_ids = 1;
+}
+
 service Room {
     // Join requires room_id and returns user_id
     rpc Join (JoinRequest) returns (JoinResponse);
@@ -39,4 +47,6 @@ service Room {
     rpc Sync (stream SyncRequest) returns (stream SyncResponse);
     // Leave requires user_id and remove the user from users list that Sync returns
     rpc Leave (LeaveRequest) returns (LeaveResponse);
+    // UserList requires room_id and returns list of user_id
+    rpc UserList(UserListRequet) returns (UserListResponse);
 }

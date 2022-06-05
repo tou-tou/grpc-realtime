@@ -19,10 +19,18 @@ message EulerRotation {
     float z = 3;
 }
 
+// Transform is the user's transform
+message Transform {
+    Position pos = 1;
+    EulerRotation rot = 2;
+}
+
 // User contains user_id , position , euler rotation
 message User {
     // Join RPC in room.proto return user_id
     string user_id = 1;
-    Position pos = 2;
-    EulerRotation rot = 3;
+    Transform origin = 2;
+    Transform head = 3;
+    Transform left_hand = 4;
+    Transform right_hand = 5;
 }

@@ -29,6 +29,8 @@ type RoomClient interface {
 	Sync(ctx context.Context, opts ...grpc.CallOption) (Room_SyncClient, error)
 	// Leave requires user_id and remove the user from users list that Sync returns
 	Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*LeaveResponse, error)
+	// UserList requires room_id and returns list of user_id
+	UserList(ctx context.Context, in *UserListRequet, opts ...grpc.CallOption) (*UserListResponse, error)
 }
 
 type roomClient struct {
@@ -88,6 +90,15 @@ func (c *roomClient) Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.C
 	return out, nil
 }
 
+func (c *roomClient) UserList(ctx context.Context, in *UserListRequet, opts ...grpc.CallOption) (*UserListResponse, error) {
+	out := new(UserListResponse)
+	err := c.cc.Invoke(ctx, "/world.Room/UserList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RoomServer is the server API for Room service.
 // All implementations must embed UnimplementedRoomServer
 // for forward compatibility
@@ -99,6 +110,8 @@ type RoomServer interface {
 	Sync(Room_SyncServer) error
 	// Leave requires user_id and remove the user from users list that Sync returns
 	Leave(context.Context, *LeaveRequest) (*LeaveResponse, error)
+	// UserList requires room_id and returns list of user_id
+	UserList(context.Context, *UserListRequet) (*UserListResponse, error)
 	mustEmbedUnimplementedRoomServer()
 }
 
@@ -114,6 +127,9 @@ func (UnimplementedRoomServer) Sync(Room_SyncServer) error {
 }
 func (UnimplementedRoomServer) Leave(context.Context, *LeaveRequest) (*LeaveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Leave not implemented")
+}
+func (UnimplementedRoomServer) UserList(context.Context, *UserListRequet) (*UserListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserList not implemented")
 }
 func (UnimplementedRoomServer) mustEmbedUnimplementedRoomServer() {}
 
@@ -190,6 +206,24 @@ func _Room_Leave_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Room_UserList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserListRequet)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoomServer).UserList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/world.Room/UserList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoomServer).UserList(ctx, req.(*UserListRequet))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Room_ServiceDesc is the grpc.ServiceDesc for Room service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -204,6 +238,10 @@ var Room_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Leave",
 			Handler:    _Room_Leave_Handler,
+		},
+		{
+			MethodName: "UserList",
+			Handler:    _Room_UserList_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

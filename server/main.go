@@ -60,6 +60,67 @@ func indexOfArray(s []string, userID string) int {
 	return -1
 }
 
+// UpdateTransform is update user's transform on user list
+func (s *roomServer) UpdateTransform(userID string, user *pb.User) {
+
+	s.users[userID].UserId = userID
+	origin := user.GetOrigin()
+	s.users[userID].Origin = &pb.Transform{
+		Pos: &pb.Position{
+			X: origin.GetPos().GetX(),
+			Y: origin.GetPos().GetY(),
+			Z: origin.GetPos().GetZ(),
+		},
+		Rot: &pb.EulerRotation{
+			X: origin.GetRot().GetX(),
+			Y: origin.GetRot().GetY(),
+			Z: origin.GetRot().GetZ(),
+		},
+	}
+
+	head := user.GetHead()
+	s.users[userID].Head = &pb.Transform{
+		Pos: &pb.Position{
+			X: head.GetPos().GetX(),
+			Y: head.GetPos().GetY(),
+			Z: head.GetPos().GetZ(),
+		},
+		Rot: &pb.EulerRotation{
+			X: head.GetRot().GetX(),
+			Y: head.GetRot().GetY(),
+			Z: head.GetRot().GetZ(),
+		},
+	}
+
+	left := user.GetLeftHand()
+	s.users[userID].LeftHand = &pb.Transform{
+		Pos: &pb.Position{
+			X: left.GetPos().GetX(),
+			Y: left.GetPos().GetY(),
+			Z: left.GetPos().GetZ(),
+		},
+		Rot: &pb.EulerRotation{
+			X: left.GetRot().GetX(),
+			Y: left.GetRot().GetY(),
+			Z: left.GetRot().GetZ(),
+		},
+	}
+
+	right := user.GetRightHand()
+	s.users[userID].RightHand = &pb.Transform{
+		Pos: &pb.Position{
+			X: right.GetPos().GetX(),
+			Y: right.GetPos().GetY(),
+			Z: right.GetPos().GetZ(),
+		},
+		Rot: &pb.EulerRotation{
+			X: right.GetRot().GetX(),
+			Y: right.GetRot().GetY(),
+			Z: right.GetRot().GetZ(),
+		},
+	}
+}
+
 // Join function requires room_id and return user_id
 // register user to room
 func (s *roomServer) Join(ctx context.Context, req *pb.JoinRequest) (*pb.JoinResponse, error) {
@@ -82,9 +143,11 @@ func (s *roomServer) Join(ctx context.Context, req *pb.JoinRequest) (*pb.JoinRes
 	s.rooms[roomID] = append(s.rooms[roomID], userID)
 	// add user info to users
 	s.users[userID] = &pb.User{
-		UserId: userID,
-		Pos:    &pb.Position{},
-		Rot:    &pb.EulerRotation{},
+		UserId:    userID,
+		Origin:    &pb.Transform{},
+		Head:      &pb.Transform{},
+		LeftHand:  &pb.Transform{},
+		RightHand: &pb.Transform{},
 	}
 	// return user_id
 	return &pb.JoinResponse{
@@ -104,7 +167,8 @@ func (s *roomServer) Sync(stream pb.Room_SyncServer) error {
 		}
 
 		roomID := in.GetRoomId()
-		userID := in.GetUser().UserId
+		user := in.GetUser()
+		userID := user.GetUserId()
 
 		// room is not exist
 		_, isExistRoom := s.rooms[roomID]
@@ -117,16 +181,11 @@ func (s *roomServer) Sync(stream pb.Room_SyncServer) error {
 			s := fmt.Sprintf("user with %s does not exit", userID)
 			return errors.New(s)
 		}
-		// update user's pos and rot
-		pos := in.GetUser().GetPos()
-		s.users[userID].Pos.X = pos.GetX()
-		s.users[userID].Pos.Y = pos.GetY()
-		s.users[userID].Pos.Z = pos.GetZ()
 
-		rot := in.GetUser().GetRot()
-		s.users[userID].Rot.X = rot.GetX()
-		s.users[userID].Rot.Y = rot.GetY()
-		s.users[userID].Rot.Z = rot.GetZ()
+		// update user's pos and rot
+		s.UpdateTransform(userID, user)
+		m := fmt.Sprintf("user_id:%s", userID)
+		fmt.Println(m)
 
 		if err := stream.Send(&pb.SyncResponse{
 			Users: s.roomUsers(roomID),
@@ -162,6 +221,12 @@ func (s *roomServer) Leave(ctx context.Context, req *pb.LeaveRequest) (*pb.Leave
 	delete(s.users, userID)
 
 	return &pb.LeaveResponse{}, nil
+}
+
+func (s *roomServer) UserList(ctx context.Context, req *pb.UserListRequet) (*pb.UserListResponse, error) {
+	return &pb.UserListResponse{
+		UserIds: s.rooms[req.RoomId],
+	}, nil
 }
 
 func main() {
