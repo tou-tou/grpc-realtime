@@ -184,8 +184,6 @@ func (s *roomServer) Sync(stream pb.Room_SyncServer) error {
 
 		// update user's pos and rot
 		s.UpdateTransform(userID, user)
-		m := fmt.Sprintf("user_id:%s", userID)
-		fmt.Println(m)
 
 		if err := stream.Send(&pb.SyncResponse{
 			Users: s.roomUsers(roomID),
