@@ -39,3 +39,6 @@ $ protoc --go_out=. --go_opt=paths=source_relative  --go-grpc_out=. --go-grpc_op
 1. Implement Client Code.
     ref [client | gRPC](https://grpc.io/docs/languages/csharp/basics/#client)
 
+# reference
+- [gRPC で実現する Unity と Go 使ってカメラの位置/回転を同期させる方法 - Qiita](https://qiita.com/nikaera/items/e8c7ef217dce17652872)
+- [Protocol bufferとgolangの勉強とUnity+Go(docker)のgRPCリアルタイムサーバーの実装](https://zenn.dev/toutou/scraps/8f8be25de10d1b)
